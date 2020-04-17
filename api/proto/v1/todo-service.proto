@@ -11,14 +11,24 @@ service ToDoService {
 
   //读取
   rpc Read(ReadRequest) returns (ReadResponse) {}
+
+  //更新
+  rpc Update(UpdateRequest) returns (UpdateResponse) {}
+
+  //删除
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+  //读取所有
+  rpc ReadAll(ReadAllRequest) returns (ReadAllResponse) {}
 }
 message CreateRequest {
+
   string api = 1;
+  //任务实体
   ToDo toDo = 2;
 }
 
 message ToDo {
-  uint64 id = 1;
+  int64 id = 1;
   string title = 2;
   string description = 3;
   google.protobuf.Timestamp reminder = 4;
@@ -27,12 +37,12 @@ message ToDo {
 message CreateResponse {
   string api = 1;
   //已创建任务的ID
-  uint64 id = 2;
+  int64 id = 2;
 }
 
 message ReadRequest {
   string api = 1;
-  uint64  id = 2;
+  int64  id = 2;
 }
 
 message ReadResponse {
@@ -48,18 +58,18 @@ message UpdateRequest{
 message UpdateResponse {
   string api =1;
   //更新的数量
-  uint64 updated = 2;
+  int64 updated = 2;
 }
 
 message DeleteRequest {
   string api = 1;
-  uint64 id = 2;
+  int64 id = 2;
 }
 
 message DeleteResponse {
   string api = 1;
   //删除的数量
-  uint64 deleted = 2;
+  int64 deleted = 2;
 }
 
 // 请求数据以读取所有待办事项任务
