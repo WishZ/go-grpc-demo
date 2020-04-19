@@ -67,7 +67,7 @@ func (s toDoServiceServer) Read(ctx context.Context, request *v1.ReadRequest) (*
 	}
 	defer c.Close()
 
-	rows, err := c.QueryContext(ctx, "SELECT * FROM m_todo WHERE `id` = ?", request.Id)
+	rows, err := c.QueryContext(ctx, "SELECT id,title,description,reminder FROM m_todo WHERE `id` = ?", request.Id)
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to select from m_todo->"+err.Error())
 	}
@@ -149,7 +149,7 @@ func (s toDoServiceServer) Delete(ctx context.Context, request *v1.DeleteRequest
 	}
 	defer c.Close()
 	// 删除ToDo
-	res, err := c.ExecContext(ctx, "DELETE FROM ToDo WHERE `ID`=?", request.Id)
+	res, err := c.ExecContext(ctx, "DELETE FROM m_todo WHERE `id`=?", request.Id)
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to delete ToDo-> "+err.Error())
 	}
@@ -179,7 +179,7 @@ func (s toDoServiceServer) ReadAll(ctx context.Context, request *v1.ReadAllReque
 	defer c.Close()
 
 	// 获取ToDo列表
-	rows, err := c.QueryContext(ctx, "SELECT `ID`, `Title`, `Description`, `Reminder` FROM ToDo")
+	rows, err := c.QueryContext(ctx, "SELECT id,title,description,reminder FROM m_todo")
 	if err != nil {
 		return nil, status.Error(codes.Unknown, "failed to select from ToDo-> "+err.Error())
 	}
@@ -190,7 +190,7 @@ func (s toDoServiceServer) ReadAll(ctx context.Context, request *v1.ReadAllReque
 
 	for rows.Next() {
 		td := new(v1.ToDo)
-		if err := rows.Scan(&td.Id, &td.Title, &td.Description, reminder); err != nil {
+		if err := rows.Scan(&td.Id, &td.Title, &td.Description, &reminder); err != nil {
 			return nil, status.Error(codes.Unknown, "failed to retrieve field values from ToDo row-> "+err.Error())
 		}
 
