@@ -3,9 +3,10 @@ package rest
 import (
 	"context"
 	v1 "github.com/WishZ/go-grpc-demo/pkg/api/v1"
+	"github.com/WishZ/go-grpc-demo/pkg/logger"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -20,7 +21,7 @@ func RunServer(ctx context.Context, grpcPort, httpPort string) error {
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 	if err := v1.RegisterToDoServiceHandlerFromEndpoint(ctx, mux, "localhost:"+grpcPort, opts); err != nil {
-		log.Fatalf("failed to start HTTP gateway: %v\n", err)
+		logger.Log.Fatal("failed to start HTTP gateway: %v\n", zap.String("reason", err.Error()))
 	}
 
 	srv := &http.Server{
@@ -33,7 +34,7 @@ func RunServer(ctx context.Context, grpcPort, httpPort string) error {
 	signal.Notify(c, os.Interrupt)
 	go func() {
 		for range c {
-			log.Println("shutting down gRPC server...")
+			logger.Log.Warn("shutting down gRPC server...")
 			<-ctx.Done()
 		}
 
@@ -42,6 +43,6 @@ func RunServer(ctx context.Context, grpcPort, httpPort string) error {
 
 		_ = srv.Shutdown(ctx)
 	}()
-	log.Println("starting HTTP/REST gateway...")
+	logger.Log.Info("starting HTTP/REST gateway...")
 	return srv.ListenAndServe()
 }

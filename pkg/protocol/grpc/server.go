@@ -3,8 +3,8 @@ package grpc
 import (
 	"context"
 	v1 "github.com/WishZ/go-grpc-demo/pkg/api/v1"
+	"github.com/WishZ/go-grpc-demo/pkg/logger"
 	"google.golang.org/grpc"
-	"log"
 	"net"
 	"os"
 	"os/signal"
@@ -25,7 +25,7 @@ func RunServer(ctx context.Context, v1API v1.ToDoServiceServer, port string) err
 	go func() {
 		for range c {
 			//信号是CTRL+C
-			log.Println("shutting down gRPC server...")
+			logger.Log.Warn("shutting down gRPC server...")
 			server.GracefulStop()
 			<-ctx.Done()
 		}
@@ -33,10 +33,10 @@ func RunServer(ctx context.Context, v1API v1.ToDoServiceServer, port string) err
 
 	//启动gRPC服务
 
-	log.Println("starting gRPC server...")
+	logger.Log.Info("starting gRPC server...")
 
 	if err := server.Serve(listen); err != nil {
-		log.Fatal("starting gRPC server failed...")
+		logger.Log.Fatal("starting gRPC server failed...")
 		return err
 	}
 

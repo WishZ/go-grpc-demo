@@ -6,6 +6,7 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
+	"github.com/WishZ/go-grpc-demo/pkg/logger"
 	"github.com/WishZ/go-grpc-demo/pkg/protocol/grpc"
 	"github.com/WishZ/go-grpc-demo/pkg/protocol/rest"
 	v1 "github.com/WishZ/go-grpc-demo/pkg/service/v1"
@@ -26,6 +27,11 @@ type Config struct {
 	DataStoreDBPassword string
 	//数据库名
 	DataStoreDBSchema string
+	// 日志参数部分
+	// LogLevel 是全局日志级别：Debug(-1)，Info(0)，Warn(1)，Error(2)，DPanic(3)，Panic(4)，Fatal(5)
+	LogLevel int
+	// LogTimeFormat 是记录器的打印时间格式，例如2020-01-02T15:04:05Z07:00
+	LogTimeFormat string
 }
 
 func RunServer() error {
@@ -47,6 +53,9 @@ func RunServer() error {
 	if len(cfg.HTTPPort) == 0 {
 		return fmt.Errorf("invalid TCP port for HTTP gateway: '%s'", cfg.HTTPPort)
 	}
+
+	//初始化全局日志记录器
+	logger.Init(cfg.LogLevel, cfg.LogTimeFormat)
 
 	//添加MySQL驱动程序特定参数来解析 date/time
 	param := "parseTime=true"
