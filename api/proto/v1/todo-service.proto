@@ -3,22 +3,76 @@ syntax = "proto3";
 package v1;
 
 import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
 
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+  info: {
+    title: "ToDo service";
+    version: "1.0";
+    contact: {
+      name: "go-grpc-demo";
+      url: "https://github.com/WishZ/go-grpc-demo";
+      email: "wishzhang77@gmail.com";
+    };
+  };
+  schemes: HTTP;
+  consumes: "application/json";
+  produces: "application/json";
+  responses: {
+    key: "404";
+    value: {
+      description: "Returned when the resource does not exist.";
+      schema: {
+        json_schema: {
+          type: STRING;
+        }
+      }
+    }
+  }
+};
 //用于管理待办事项列表的服务
 service ToDoService {
   //创建
-  rpc Create (CreateRequest) returns (CreateResponse) {}
+  rpc Create (CreateRequest) returns (CreateResponse) {
+    option(google.api.http) = {
+      post:"/v1/todo"
+      body:"*"
+    };
+  }
 
   //读取
-  rpc Read(ReadRequest) returns (ReadResponse) {}
+  rpc Read(ReadRequest) returns (ReadResponse) {
+    option(google.api.http) = {
+      get:"/v1/todo/{id}"
+    };
+  }
 
   //更新
-  rpc Update(UpdateRequest) returns (UpdateResponse) {}
+  rpc Update(UpdateRequest) returns (UpdateResponse) {
+    option(google.api.http) = {
+      put:"/v1/todo/{toDo.id}"
+      body:"*"
+
+      additional_bindings {
+        patch: "/v1/todo/{toDo.id}"
+        body: "*"
+      }
+    };
+  }
 
   //删除
-  rpc Delete(DeleteRequest) returns (DeleteResponse) {}
+  rpc Delete(DeleteRequest) returns (DeleteResponse) {
+    option (google.api.http) = {
+      delete: "/v1/todo/{id}"
+    };
+  }
   //读取所有
-  rpc ReadAll(ReadAllRequest) returns (ReadAllResponse) {}
+  rpc ReadAll(ReadAllRequest) returns (ReadAllResponse) {
+    option (google.api.http) = {
+      get: "/v1/todo/all"
+    };
+  }
 }
 message CreateRequest {
 
@@ -56,7 +110,7 @@ message UpdateRequest{
 }
 
 message UpdateResponse {
-  string api =1;
+  string api = 1;
   //更新的数量
   int64 updated = 2;
 }
