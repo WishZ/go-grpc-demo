@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"flag"
-	v1 "github.com/WishZ/go-grpc-demo/api/proto/v1"
+	v1 "github.com/WishZ/go-grpc-demo/pkg/api/v1"
 	"github.com/golang/protobuf/ptypes"
 	"google.golang.org/grpc"
 	"log"

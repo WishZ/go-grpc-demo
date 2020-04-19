@@ -2,7 +2,7 @@ package grpc
 
 import (
 	"context"
-	v1 "github.com/WishZ/go-grpc-demo/api/proto/v1"
+	v1 "github.com/WishZ/go-grpc-demo/pkg/api/v1"
 	"google.golang.org/grpc"
 	"log"
 	"net"

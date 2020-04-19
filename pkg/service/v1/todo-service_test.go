@@ -3,7 +3,7 @@ package v1
 import (
 	"context"
 	"errors"
-	v1 "github.com/WishZ/go-grpc-demo/api/proto/v1"
+	v1 "github.com/WishZ/go-grpc-demo/pkg/api/v1"
 	"gopkg.in/DATA-DOG/go-sqlmock.v1"
 	"reflect"
 	"testing"
