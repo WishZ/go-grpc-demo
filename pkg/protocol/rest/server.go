@@ -34,7 +34,7 @@ func RunServer(ctx context.Context, grpcPort, httpPort string) error {
 	signal.Notify(c, os.Interrupt)
 	go func() {
 		for range c {
-			logger.Log.Warn("shutting down gRPC server...")
+			logger.Log.Warn("shutting down HTTP/REST gateway server...")
 			<-ctx.Done()
 		}
 

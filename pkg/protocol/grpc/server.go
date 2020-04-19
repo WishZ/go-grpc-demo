@@ -4,6 +4,7 @@ import (
 	"context"
 	v1 "github.com/WishZ/go-grpc-demo/pkg/api/v1"
 	"github.com/WishZ/go-grpc-demo/pkg/logger"
+	"github.com/WishZ/go-grpc-demo/pkg/protocol/grpc/middleware"
 	"google.golang.org/grpc"
 	"net"
 	"os"
@@ -15,6 +16,10 @@ func RunServer(ctx context.Context, v1API v1.ToDoServiceServer, port string) err
 	if err != nil {
 		return err
 	}
+	var opts []grpc.ServerOption
+
+	opts = middleware.AddLogging(logger.Log, opts)
+
 	//服务注册
 	server := grpc.NewServer()
 	v1.RegisterToDoServiceServer(server, v1API)

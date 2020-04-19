@@ -44,6 +44,8 @@ func RunServer() error {
 	flag.StringVar(&cfg.DataStoreDBUser, "db-user", "", "Database user")
 	flag.StringVar(&cfg.DataStoreDBPassword, "db-password", "", "Database password")
 	flag.StringVar(&cfg.DataStoreDBSchema, "db-schema", "", "Database schema")
+	flag.IntVar(&cfg.LogLevel, "log-level", -1, "log level")
+	flag.StringVar(&cfg.LogTimeFormat, "log-time-format", "", "log time format")
 	flag.Parse()
 
 	if len(cfg.GRPCPort) == 0 {
