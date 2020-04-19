@@ -70,7 +70,7 @@ service ToDoService {
   //读取所有
   rpc ReadAll(ReadAllRequest) returns (ReadAllResponse) {
     option (google.api.http) = {
-      get: "/v1/todo/all"
+      get: "/v1/todo_all"
     };
   }
 }

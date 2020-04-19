@@ -52,7 +52,7 @@ func main() {
 		log.Fatalf("failed to unmarshal JSON response of Create method: %v", err)
 	}
 	// 调用Read
-	resp, err = http.Get(fmt.Sprintf("%s%s/%s", *address, "v1/todo", created.ID))
+	resp, err = http.Get(fmt.Sprintf("%s%s/%s", *address, "/v1/todo", created.ID))
 	if err != nil {
 		log.Fatalf("failed to call Read method: %v", err)
 	}
@@ -65,7 +65,7 @@ func main() {
 	}
 	log.Printf("Read response: Code=%d, Body=%s\n\n", resp.StatusCode, body)
 	// 调用Update
-	req, err := http.NewRequest("PUT", fmt.Sprintf("%s%s/%s", *address, "v1/todo", created.ID),
+	req, err := http.NewRequest("PUT", fmt.Sprintf("%s%s/%s", *address, "/v1/todo", created.ID),
 		strings.NewReader(fmt.Sprintf(`
 		{
 			"api":"v1",
@@ -90,7 +90,7 @@ func main() {
 	}
 	log.Printf("Update response: Code=%d, Body=%s\n\n", resp.StatusCode, body)
 	// 调用ReadAll
-	resp, err = http.Get(*address + "/v1/todo/all")
+	resp, err = http.Get(*address + "/v1/todo_all")
 	if err != nil {
 		log.Fatalf("failed to call ReadAll method: %v", err)
 	}

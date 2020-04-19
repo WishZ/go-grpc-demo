@@ -59,45 +59,6 @@
         ]
       }
     },
-    "/v1/todo/all": {
-      "get": {
-        "summary": "读取所有",
-        "operationId": "ToDoService_ReadAll",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ReadAllResponse"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response",
-            "schema": {
-              "$ref": "#/definitions/runtimeError"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "api",
-            "description": "API版本控制：这是明确指定版本的最佳实践.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "ToDoService"
-        ]
-      }
-    },
     "/v1/todo/{id}": {
       "get": {
         "summary": "读取",
@@ -271,6 +232,45 @@
             "schema": {
               "$ref": "#/definitions/v1UpdateRequest"
             }
+          }
+        ],
+        "tags": [
+          "ToDoService"
+        ]
+      }
+    },
+    "/v1/todo_all": {
+      "get": {
+        "summary": "读取所有",
+        "operationId": "ToDoService_ReadAll",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ReadAllResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "api",
+            "description": "API版本控制：这是明确指定版本的最佳实践.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
