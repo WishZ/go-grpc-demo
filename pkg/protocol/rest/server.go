@@ -4,6 +4,7 @@ import (
 	"context"
 	v1 "github.com/WishZ/go-grpc-demo/pkg/api/v1"
 	"github.com/WishZ/go-grpc-demo/pkg/logger"
+	"github.com/WishZ/go-grpc-demo/pkg/protocol/rest/middleware"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
@@ -25,8 +26,10 @@ func RunServer(ctx context.Context, grpcPort, httpPort string) error {
 	}
 
 	srv := &http.Server{
-		Addr:    ":" + httpPort,
-		Handler: mux,
+		Addr: ":" + httpPort,
+		Handler: middleware.AddRequestID(
+			middleware.AddLogger(logger.Log, mux),
+		),
 	}
 
 	//关闭
