@@ -45,7 +45,7 @@ func RunServer() error {
 	flag.StringVar(&cfg.DataStoreDBPassword, "db-password", "", "Database password")
 	flag.StringVar(&cfg.DataStoreDBSchema, "db-schema", "", "Database schema")
 	flag.IntVar(&cfg.LogLevel, "log-level", -1, "log level")
-	flag.StringVar(&cfg.LogTimeFormat, "log-time-format", "", "log time format")
+	flag.StringVar(&cfg.LogTimeFormat, "log-time-format", "2006-01-02T15:04:05.999999999Z07:00", "log time format")
 	flag.Parse()
 
 	if len(cfg.GRPCPort) == 0 {
