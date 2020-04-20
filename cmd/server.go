@@ -30,7 +30,7 @@ type Config struct {
 	// 日志参数部分
 	// LogLevel 是全局日志级别：Debug(-1)，Info(0)，Warn(1)，Error(2)，DPanic(3)，Panic(4)，Fatal(5)
 	LogLevel int
-	// LogTimeFormat 是记录器的打印时间格式，例如2020-01-02T15:04:05Z07:00
+	// LogTimeFormat 是记录器的打印时间格式，例如2006-01-02T15:04:05.999999999Z07:00
 	LogTimeFormat string
 }
 
