@@ -14,7 +14,7 @@ const apiVersion = "v1"
 
 func main() {
 	//获取配置
-	address := flag.String("server", "", "gRPC server in format host:port")
+	address := flag.String("server", "http://localhost:9090", "gRPC server in format host:port")
 	flag.Parse()
 
 	//建立连接
