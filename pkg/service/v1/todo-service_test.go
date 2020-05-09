@@ -52,7 +52,7 @@ func Test_toDoServiceServer_Create(t *testing.T) {
 				},
 			},
 			mock: func() {
-				mock.ExpectExec("INSERT INTO ToDo").WithArgs("title", "description", tm).
+				mock.ExpectExec("INSERT INTO m_todo").WithArgs("title", "description", tm).
 					WillReturnResult(sqlmock.NewResult(1, 1))
 			},
 			want: &v1.CreateResponse{
@@ -115,7 +115,7 @@ func Test_toDoServiceServer_Create(t *testing.T) {
 				},
 			},
 			mock: func() {
-				mock.ExpectExec("INSERT INTO ToDo").WithArgs("title", "description", tm).
+				mock.ExpectExec("INSERT INTO m_todo").WithArgs("title", "description", tm).
 					WillReturnError(errors.New("INSERT failed"))
 			},
 			wantErr: true,
@@ -135,7 +135,7 @@ func Test_toDoServiceServer_Create(t *testing.T) {
 				},
 			},
 			mock: func() {
-				mock.ExpectExec("INSERT INTO ToDo").WithArgs("title", "description", tm).
+				mock.ExpectExec("INSERT INTO m_todo").WithArgs("title", "description", tm).
 					WillReturnResult(sqlmock.NewErrorResult(errors.New("LastInsertId failed")))
 			},
 			wantErr: true,
@@ -192,7 +192,7 @@ func Test_toDoServiceServer_Read(t *testing.T) {
 			mock: func() {
 				rows := sqlmock.NewRows([]string{"ID", "Title", "Description", "Reminder"}).
 					AddRow(1, "title", "description", tm)
-				mock.ExpectQuery("SELECT (.+) FROM ToDo").WithArgs(1).WillReturnRows(rows)
+				mock.ExpectQuery("SELECT (.+) FROM m_todo").WithArgs(1).WillReturnRows(rows)
 			},
 			want: &v1.ReadResponse{
 				Api: "v1",
@@ -228,7 +228,7 @@ func Test_toDoServiceServer_Read(t *testing.T) {
 				},
 			},
 			mock: func() {
-				mock.ExpectQuery("SELECT (.+) FROM ToDo").WithArgs(1).
+				mock.ExpectQuery("SELECT (.+) FROM m_todo").WithArgs(1).
 					WillReturnError(errors.New("SELECT failed"))
 			},
 			wantErr: true,
@@ -245,7 +245,7 @@ func Test_toDoServiceServer_Read(t *testing.T) {
 			},
 			mock: func() {
 				rows := sqlmock.NewRows([]string{"ID", "Title", "Description", "Reminder"})
-				mock.ExpectQuery("SELECT (.+) FROM ToDo").WithArgs(1).WillReturnRows(rows)
+				mock.ExpectQuery("SELECT (.+) FROM m_todo").WithArgs(1).WillReturnRows(rows)
 			},
 			wantErr: true,
 		},
@@ -305,7 +305,7 @@ func Test_toDoServiceServer_Update(t *testing.T) {
 				},
 			},
 			mock: func() {
-				mock.ExpectExec("UPDATE ToDo").WithArgs("new title", "new description", tm, 1).
+				mock.ExpectExec("UPDATE m_todo").WithArgs("new title", "new description", tm, 1).
 					WillReturnResult(sqlmock.NewResult(1, 1))
 			},
 			want: &v1.UpdateResponse{
@@ -368,7 +368,7 @@ func Test_toDoServiceServer_Update(t *testing.T) {
 				},
 			},
 			mock: func() {
-				mock.ExpectExec("UPDATE ToDo").WithArgs("new title", "new description", tm, 1).
+				mock.ExpectExec("UPDATE m_todo").WithArgs("new title", "new description", tm, 1).
 					WillReturnError(errors.New("UPDATE failed"))
 			},
 			wantErr: true,
@@ -389,7 +389,7 @@ func Test_toDoServiceServer_Update(t *testing.T) {
 				},
 			},
 			mock: func() {
-				mock.ExpectExec("UPDATE ToDo").WithArgs("new title", "new description", tm, 1).
+				mock.ExpectExec("UPDATE m_todo").WithArgs("new title", "new description", tm, 1).
 					WillReturnResult(sqlmock.NewErrorResult(errors.New("RowsAffected failed")))
 			},
 			wantErr: true,
@@ -410,7 +410,7 @@ func Test_toDoServiceServer_Update(t *testing.T) {
 				},
 			},
 			mock: func() {
-				mock.ExpectExec("UPDATE ToDo").WithArgs("new title", "new description", tm, 1).
+				mock.ExpectExec("UPDATE m_todo").WithArgs("new title", "new description", tm, 1).
 					WillReturnResult(sqlmock.NewResult(1, 0))
 			},
 			wantErr: true,
@@ -463,7 +463,7 @@ func Test_toDoServiceServer_Delete(t *testing.T) {
 				},
 			},
 			mock: func() {
-				mock.ExpectExec("DELETE FROM ToDo").WithArgs(1).
+				mock.ExpectExec("DELETE FROM m_todo").WithArgs(1).
 					WillReturnResult(sqlmock.NewResult(1, 1))
 			},
 			want: &v1.DeleteResponse{
@@ -495,7 +495,7 @@ func Test_toDoServiceServer_Delete(t *testing.T) {
 				},
 			},
 			mock: func() {
-				mock.ExpectExec("DELETE FROM ToDo").WithArgs(1).
+				mock.ExpectExec("DELETE FROM m_todo").WithArgs(1).
 					WillReturnError(errors.New("DELETE failed"))
 			},
 			wantErr: true,
@@ -511,7 +511,7 @@ func Test_toDoServiceServer_Delete(t *testing.T) {
 				},
 			},
 			mock: func() {
-				mock.ExpectExec("DELETE FROM ToDo").WithArgs(1).
+				mock.ExpectExec("DELETE FROM m_todo").WithArgs(1).
 					WillReturnResult(sqlmock.NewErrorResult(errors.New("RowsAffected failed")))
 			},
 			wantErr: true,
@@ -527,7 +527,7 @@ func Test_toDoServiceServer_Delete(t *testing.T) {
 				},
 			},
 			mock: func() {
-				mock.ExpectExec("DELETE FROM ToDo").WithArgs(1).
+				mock.ExpectExec("DELETE FROM m_todo").WithArgs(1).
 					WillReturnResult(sqlmock.NewResult(1, 0))
 			},
 			wantErr: true,
@@ -586,7 +586,7 @@ func Test_toDoServiceServer_ReadAll(t *testing.T) {
 				rows := sqlmock.NewRows([]string{"ID", "Title", "Description", "Reminder"}).
 					AddRow(1, "title 1", "description 1", tm1).
 					AddRow(2, "title 2", "description 2", tm2)
-				mock.ExpectQuery("SELECT (.+) FROM ToDo").WillReturnRows(rows)
+				mock.ExpectQuery("SELECT (.+) FROM m_todo").WillReturnRows(rows)
 			},
 			want: &v1.ReadAllResponse{
 				Api: "v1",
@@ -617,7 +617,7 @@ func Test_toDoServiceServer_ReadAll(t *testing.T) {
 			},
 			mock: func() {
 				rows := sqlmock.NewRows([]string{"ID", "Title", "Description", "Reminder"})
-				mock.ExpectQuery("SELECT (.+) FROM ToDo").WillReturnRows(rows)
+				mock.ExpectQuery("SELECT (.+) FROM m_todo").WillReturnRows(rows)
 			},
 			want: &v1.ReadAllResponse{
 				Api:   "v1",
