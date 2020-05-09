@@ -2,16 +2,17 @@ package rest
 
 import (
 	"context"
-	v1 "github.com/WishZ/go-grpc-demo/pkg/api/v1"
-	"github.com/WishZ/go-grpc-demo/pkg/logger"
-	"github.com/WishZ/go-grpc-demo/pkg/protocol/rest/middleware"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"go.uber.org/zap"
-	"google.golang.org/grpc"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	v1 "github.com/WishZ/go-todo-service/pkg/api/v1"
+	"github.com/WishZ/go-todo-service/pkg/logger"
+	"github.com/WishZ/go-todo-service/pkg/protocol/rest/middleware"
+	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"go.uber.org/zap"
+	"google.golang.org/grpc"
 )
 
 //允许HTTP / REST网关

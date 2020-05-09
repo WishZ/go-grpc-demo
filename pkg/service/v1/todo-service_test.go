@@ -3,11 +3,12 @@ package v1
 import (
 	"context"
 	"errors"
-	v1 "github.com/WishZ/go-grpc-demo/pkg/api/v1"
-	"gopkg.in/DATA-DOG/go-sqlmock.v1"
 	"reflect"
 	"testing"
 	"time"
+
+	v1 "github.com/WishZ/go-todo-service/pkg/api/v1"
+	"gopkg.in/DATA-DOG/go-sqlmock.v1"
 
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/timestamp"

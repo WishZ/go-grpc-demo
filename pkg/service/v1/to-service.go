@@ -4,11 +4,12 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	v1 "github.com/WishZ/go-grpc-demo/pkg/api/v1"
+	"time"
+
+	v1 "github.com/WishZ/go-todo-service/pkg/api/v1"
 	"github.com/golang/protobuf/ptypes"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"time"
 )
 
 const (

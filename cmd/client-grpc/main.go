@@ -3,11 +3,12 @@ package main
 import (
 	"context"
 	"flag"
-	v1 "github.com/WishZ/go-grpc-demo/pkg/api/v1"
-	"github.com/golang/protobuf/ptypes"
-	"google.golang.org/grpc"
 	"log"
 	"time"
+
+	v1 "github.com/WishZ/go-todo-service/pkg/api/v1"
+	"github.com/golang/protobuf/ptypes"
+	"google.golang.org/grpc"
 )
 
 const apiVersion = "v1"

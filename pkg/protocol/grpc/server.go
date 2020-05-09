@@ -2,13 +2,14 @@ package grpc
 
 import (
 	"context"
-	v1 "github.com/WishZ/go-grpc-demo/pkg/api/v1"
-	"github.com/WishZ/go-grpc-demo/pkg/logger"
-	"github.com/WishZ/go-grpc-demo/pkg/protocol/grpc/middleware"
-	"google.golang.org/grpc"
 	"net"
 	"os"
 	"os/signal"
+
+	v1 "github.com/WishZ/go-todo-service/pkg/api/v1"
+	"github.com/WishZ/go-todo-service/pkg/logger"
+	"github.com/WishZ/go-todo-service/pkg/protocol/grpc/middleware"
+	"google.golang.org/grpc"
 )
 
 func RunServer(ctx context.Context, v1API v1.ToDoServiceServer, port string) error {

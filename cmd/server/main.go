@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/WishZ/go-grpc-demo/cmd"
 	"os"
+
+	"github.com/WishZ/go-todo-service/cmd"
 )
 
 func main() {

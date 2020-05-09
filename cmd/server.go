@@ -6,10 +6,11 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
-	"github.com/WishZ/go-grpc-demo/pkg/logger"
-	"github.com/WishZ/go-grpc-demo/pkg/protocol/grpc"
-	"github.com/WishZ/go-grpc-demo/pkg/protocol/rest"
-	v1 "github.com/WishZ/go-grpc-demo/pkg/service/v1"
+
+	"github.com/WishZ/go-todo-service/pkg/logger"
+	"github.com/WishZ/go-todo-service/pkg/protocol/grpc"
+	"github.com/WishZ/go-todo-service/pkg/protocol/rest"
+	v1 "github.com/WishZ/go-todo-service/pkg/service/v1"
 	_ "github.com/go-sql-driver/mysql"
 )
 

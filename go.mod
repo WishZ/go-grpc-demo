@@ -1,4 +1,4 @@
-module github.com/WishZ/go-grpc-demo
+module github.com/WishZ/go-todo-service
 
 go 1.14
 
