@@ -4,16 +4,13 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/WishZ/go-todo-service/pkg/enum"
 	"time"
 
 	v1 "github.com/WishZ/go-todo-service/pkg/api/v1"
 	"github.com/golang/protobuf/ptypes"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-)
-
-const (
-	apiVersion = "v1"
 )
 
 // toDoServiceServer是v1.ToDoServiceServer proto接口的实现
@@ -50,7 +47,7 @@ func (s toDoServiceServer) Create(ctx context.Context, request *v1.CreateRequest
 		return nil, status.Error(codes.Unknown, "failed to retrieve id for created ToDo-> "+err.Error())
 	}
 	return &v1.CreateResponse{
-		Api: apiVersion,
+		Api: enum.ApiVersion,
 		Id:  id,
 	}, nil
 }
@@ -96,7 +93,7 @@ func (s toDoServiceServer) Read(ctx context.Context, request *v1.ReadRequest) (*
 	}
 
 	return &v1.ReadResponse{
-		Api:  apiVersion,
+		Api:  enum.ApiVersion,
 		Todo: &td,
 	}, nil
 }
@@ -133,7 +130,7 @@ func (s toDoServiceServer) Update(ctx context.Context, request *v1.UpdateRequest
 	}
 
 	return &v1.UpdateResponse{
-		Api:     apiVersion,
+		Api:     enum.ApiVersion,
 		Updated: rows,
 	}, nil
 }
@@ -162,7 +159,7 @@ func (s toDoServiceServer) Delete(ctx context.Context, request *v1.DeleteRequest
 		return nil, status.Error(codes.NotFound, fmt.Sprintf("ToDo with ID='%d' is not found", request.Id))
 	}
 	return &v1.DeleteResponse{
-		Api:     apiVersion,
+		Api:     enum.ApiVersion,
 		Deleted: rows,
 	}, nil
 }
@@ -206,7 +203,7 @@ func (s toDoServiceServer) ReadAll(ctx context.Context, request *v1.ReadAllReque
 		return nil, status.Error(codes.Unknown, "failed to retrieve data from ToDo-> "+err.Error())
 	}
 	return &v1.ReadAllResponse{
-		Api:   apiVersion,
+		Api:   enum.ApiVersion,
 		ToDos: list,
 	}, nil
 }
@@ -219,9 +216,9 @@ func NewToDoServiceServer(db *sql.DB) v1.ToDoServiceServer {
 // checkAPI检查服务器是否支持客户端请求的API版本
 func (s *toDoServiceServer) checkApi(api string) error {
 	if len(api) > 0 {
-		if apiVersion != api {
+		if enum.ApiVersion != api {
 			return status.Errorf(codes.Unimplemented,
-				"unsupported API version: service implements API version '%s', but asked for '%s'", apiVersion, api)
+				"unsupported API version: service implements API version '%s', but asked for '%s'", enum.ApiVersion, api)
 		}
 	}
 	return nil

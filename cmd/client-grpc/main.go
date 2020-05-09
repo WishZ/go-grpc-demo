@@ -41,6 +41,9 @@ func main() {
 		},
 	}
 	res1, err := c.Create(ctx, &req1)
+	if res1 == nil {
+		log.Fatalf("任务创建失败: %v", err)
+	}
 	log.Printf("Create result: <%+v>\n\n", res1)
 	id := res1.Id
 	// Read
